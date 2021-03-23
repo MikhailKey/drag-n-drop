@@ -9,7 +9,7 @@ export function registerSchema() {
         password: Yup.string()
             .required('Введите пароль')
             .min(6, 'Пароль слишком короткий'),
-        confirm_password: Yup.string().oneOf(
+        confirmPassword: Yup.string().oneOf(
             [Yup.ref('password'), null],
             'Пароли должны совпадать'
         ),

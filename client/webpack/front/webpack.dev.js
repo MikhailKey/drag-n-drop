@@ -10,7 +10,7 @@ const srcPath = '../../src/'
 
 module.exports = merge(baseConfig, devConfig, {
     entry: {
-        main: path.join(__dirname, srcPath, 'index.ts'),
+        main: path.join(__dirname, srcPath, 'index.tsx'),
     },
     devServer: {
         port: 4004,

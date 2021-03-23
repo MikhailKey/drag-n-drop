@@ -5,7 +5,6 @@ import { useAuth } from './hooks/authHook'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { useRoutes } from './routes'
 import { AuthContext } from './context/authContext'
-import './app.css'
 
 const App: React.FC = () => {
     const { token, userId, login, logout } = useAuth()

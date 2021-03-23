@@ -2,12 +2,11 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ConfigWebpackPlugin = require('config-webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const srcPath = '../src/'
+const publicPath = '../public/'
 
-const isProd = process.env.NODE_ENV === 'production'
-const isDev = !isProd
+const isDev = true
 
 const jsLoaders = () => {
     const loaders = [
@@ -63,20 +62,6 @@ module.exports = {
                 use: 'file-loader',
             },
             {
-                test: /\.s[ac]ss$/i,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: isDev,
-                            reloadAll: true
-                        }
-                    },
-                    'css-loader',
-                    'sass-loader',
-                ],
-            },
-            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: jsLoaders(),
@@ -100,7 +85,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             inject: true,
             hash: true,
-            template: path.join(__dirname, srcPath, 'index.html'),
+            template: path.join(__dirname, publicPath, 'index.html'),
         }),
         new ConfigWebpackPlugin(),
         new CopyWebpackPlugin([
@@ -113,8 +98,5 @@ module.exports = {
                 ]
             }
         ]),
-        new MiniCssExtractPlugin({
-            filename: filename('css'),
-        }),
     ],
 }

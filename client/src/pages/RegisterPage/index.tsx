@@ -27,16 +27,19 @@ const useStyles = makeStyles({
         left: '50%',
         transform: 'translateX(-50%) translateY(-50%)',
     },
+    butttonProgress: {
+        color: 'red'
+    }
 })
 
-const RegisterPage = props => {
-    const classes = useStyles(props)
+const RegisterPage = () => {
+    const classes = useStyles()
     const { request, loading, error, clearError } = useHttp()
     const [openSuccess, setOpenSuccess] = useState(false)
     const [openError, setOpenError] = useState(false)
     const history = useHistory()
     useEffect(() => {
-        if (error.status === 500) {
+        if (error?.status === 500) {
             setOpenError(true)
         }
     }, [error])
@@ -45,6 +48,7 @@ const RegisterPage = props => {
         initialValues: {
             email: '',
             password: '',
+            confirmPassword: ''
         },
         validationSchema: registerSchema(),
         onSubmit: async values => {
@@ -75,9 +79,7 @@ const RegisterPage = props => {
                                     clearError()
                                 }}
                                 error={
-                                    formik.touched.email && formik.errors.email
-                                        ? true
-                                        : false
+                                    !!(formik.touched.email && formik.errors.email)
                                 }
                                 helperText={
                                     formik.touched.email && formik.errors.email
@@ -95,10 +97,8 @@ const RegisterPage = props => {
                                     clearError()
                                 }}
                                 error={
-                                    formik.touched.password &&
-                                    formik.errors.password
-                                        ? true
-                                        : false
+                                    !!(formik.touched.password &&
+                                        formik.errors.password)
                                 }
                                 helperText={
                                     formik.touched.password &&
@@ -108,21 +108,19 @@ const RegisterPage = props => {
                                 }
                             />
                             <TextField
-                                name="confirm_password"
+                                name="confirmPassword"
                                 type="password"
                                 fullWidth={true}
                                 label="Повторите пароль"
                                 onChange={formik.handleChange}
                                 error={
-                                    formik.touched.confirm_password &&
-                                    formik.errors.confirm_password
-                                        ? true
-                                        : false
+                                    !!(formik.touched.confirmPassword &&
+                                        formik.errors.confirmPassword)
                                 }
                                 helperText={
-                                    formik.touched.confirm_password &&
-                                    formik.errors.confirm_password
-                                        ? formik.errors.confirm_password
+                                    formik.touched.confirmPassword &&
+                                    formik.errors.confirmPassword
+                                        ? formik.errors.confirmPassword
                                         : null
                                 }
                             />
@@ -138,7 +136,6 @@ const RegisterPage = props => {
                             {loading ? (
                                 <CircularProgress
                                     size={24}
-                                    className={classes.buttonProgress}
                                 />
                             ) : null}
                             Зарегестрироваться

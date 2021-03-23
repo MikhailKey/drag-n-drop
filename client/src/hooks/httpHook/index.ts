@@ -1,11 +1,15 @@
 import { useState, useCallback } from 'react'
 import axios from 'axios'
 
+export type messageType = {
+    message: string
+    status: number | null
+}
 export const useHttp = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState({
         message: '',
-        status: '',
+        status: null,
     })
 
     const request = useCallback(async (url, method = 'get', data = null) => {
@@ -32,7 +36,7 @@ export const useHttp = () => {
 
     const clearError = () => setError({
         message: '',
-        status: ''
+        status: null
     })
 
     return {
