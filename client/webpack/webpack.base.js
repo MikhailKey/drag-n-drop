@@ -2,36 +2,21 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ConfigWebpackPlugin = require('config-webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const webpack = require('webpack')
 
 const srcPath = '../src/'
 const publicPath = '../public/'
 
-const isDev = true
-
-const jsLoaders = () => {
-    const loaders = [
-        {
-            loader: 'babel-loader',
-            options: {
-                presets: ['@babel/preset-env'],
-                plugins: ['@babel/plugin-proposal-class-properties']
-            }
-        }
-    ]
-
-    if (isDev) {
-        loaders.push('eslint-loader')
-    }
-    return loaders;
-}
-
-const filename = ext => isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`
-
 module.exports = {
+    entry: {
+        main: path.join(__dirname, srcPath, 'index.tsx'),
+    },
     output: {
         path: path.resolve(__dirname, '../../dist'),
         filename: '[name].[hash].bundle.js',
         chunkFilename: '[name].[hash].bundle.js',
+        publicPath: '/',
     },
     resolve: {
         extensions: ['.mjs', '.js', '.json', '.ts', '.tsx'],
@@ -61,12 +46,6 @@ module.exports = {
                 test: /\.(jpg|png|eot|svg|otf|ttf|woff|woff2|ico|mp4|webm|ogv)$/,
                 use: 'file-loader',
             },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: jsLoaders(),
-
-            }
         ],
     },
     optimization: {
@@ -82,21 +61,23 @@ module.exports = {
         },
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             inject: true,
             hash: true,
             template: path.join(__dirname, publicPath, 'index.html'),
         }),
         new ConfigWebpackPlugin(),
-        new CopyWebpackPlugin([
-            {
+        new CopyWebpackPlugin({
                 patterns: [
                     {
                         from: 'src/common/assets/',
-                        to: './asserts/',
+                        to: './assets/',
                     },
                 ]
-            }
-        ]),
+            }),
+        new webpack.ProvidePlugin({
+            process: 'process/browser',
+        }),
     ],
 }

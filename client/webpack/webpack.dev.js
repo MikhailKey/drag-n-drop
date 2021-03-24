@@ -1,7 +1,10 @@
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const path = require('path')
+const baseConfig = require('./webpack.base')
 
-module.exports = {
+const { api:  { url, endpoints } } = require('config')
+
+module.exports = merge(baseConfig, {
     mode: 'development',
     target: 'web',
     output: {
@@ -10,10 +13,19 @@ module.exports = {
     devtool: 'eval-source-map',
     devServer: {
         host: '0.0.0.0',
+        port: 4004,
         contentBase: path.resolve('dist'),
         historyApiFallback: true,
         inline: true,
         disableHostCheck: true,
         overlay: true,
+        proxy: [
+            {
+                context: Object.values(endpoints),
+                changeOrigin: true,
+                logLevel: 'debug',
+                target: url,
+            },
+        ],
     },
-}
+})

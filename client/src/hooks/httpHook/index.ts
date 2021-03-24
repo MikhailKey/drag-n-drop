@@ -16,7 +16,7 @@ export const useHttp = () => {
         setLoading(true)
         let response = null
         await axios({
-            url,
+            url: 'api/' + url,
             method,
             data,
         })
@@ -34,10 +34,11 @@ export const useHttp = () => {
         return response
     }, [])
 
-    const clearError = () => setError({
-        message: '',
-        status: null
-    })
+    const clearError = () =>
+        setError({
+            message: '',
+            status: null,
+        })
 
     return {
         loading,
