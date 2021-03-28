@@ -1,5 +1,5 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 html,
 body,
@@ -82,12 +82,12 @@ time,
 mark,
 audio,
 video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -101,38 +101,38 @@ hgroup,
 menu,
 nav,
 section {
-  display: block;
+    display: block;
 }
 
 body {
-  font-family: "Roboto", sans-serif;
-  padding: 0;
-  margin: 0;
-  color: white;
-  font-size: 16px;
-  min-width: 100vw;
-  min-height: 100vh;
-  background: linear-gradient(to right, #151515, #2E2E2E);
+    font-family: 'Roboto', sans-serif;
+    padding: 0;
+    margin: 0;
+    color: white;
+    font-size: 16px;
+    min-width: 100vw;
+    min-height: 100vh;
+    background: linear-gradient(to right, #151515, #2e2e2e);
 }
 svg tspan {
-  font-family: "roboto", sans-serif;
+    font-family: 'roboto', sans-serif;
 }
 ol,
 ul {
-  list-style: none;
+    list-style: none;
 }
 blockquote,
 q {
-  quotes: none;
+    quotes: none;
 }
 blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
-  content: none;
+    content: '';
+    content: none;
 }
 table {
-  border-collapse: collapse;
-  border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
