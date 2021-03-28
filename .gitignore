@@ -5,6 +5,8 @@
 /client/node_modules
 /server/config
 /server/node_modules
+/server/package-lock.json
+/client/package.json
 /.pnp
 .pnp.js
 

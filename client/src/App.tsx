@@ -5,6 +5,7 @@ import { useAuth } from './hooks/authHook'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { useRoutes } from './routes'
 import { AuthContext } from './context/authContext'
+import ApiProvider from 'common/providers/ApiProvider/Provider'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 
 const useGlobalStyles = makeStyles(() =>
@@ -40,17 +41,19 @@ const App: React.FC = () => {
     return (
         <>
             <ThemeProvider theme={darkTheme}>
-                <GlobalStyles />
-                <AuthContext.Provider
-                    value={{
-                        token,
-                        userId,
-                        login,
-                        logout,
-                        isAuthenticated,
-                    }}>
-                    <Router>{routes}</Router>
-                </AuthContext.Provider>
+                <ApiProvider>
+                    <GlobalStyles />
+                    <AuthContext.Provider
+                        value={{
+                            token,
+                            userId,
+                            login,
+                            logout,
+                            isAuthenticated,
+                        }}>
+                        <Router>{routes}</Router>
+                    </AuthContext.Provider>
+                </ApiProvider>
             </ThemeProvider>
         </>
     )

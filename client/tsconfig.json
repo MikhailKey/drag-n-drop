@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,9 +19,10 @@
     "baseUrl": "src",
 
     "paths": {
-      "components/*": ["common/*"],
-      "containers/*": ["modules/lk/*"],
-      "pages/*": ["modules/store/*"]
+      "common/*": ["common/*"],
+      "components/*": ["components/*"],
+      "containers/*": ["containers/*"],
+      "pages/*": ["pages/*"]
     }
   },
   "include": ["src"],

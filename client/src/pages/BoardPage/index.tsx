@@ -28,8 +28,8 @@ const useStyles = makeStyles({
     },
 })
 
-const BoardPage = props => {
-    const classes = useStyles(props)
+const BoardPage = () => {
+    const classes = useStyles()
     // @ts-ignore
     const { id } = useParams()
     const { request, loading } = useHttp()
