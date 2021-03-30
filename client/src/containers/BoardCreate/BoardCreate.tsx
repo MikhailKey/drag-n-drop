@@ -1,55 +1,50 @@
 import React, { useState } from 'react'
-import { useHttp } from '../../../hooks/httpHook'
+import { useModal } from 'common/providers/ModalProvider/ModalProvider'
 import { useHistory } from 'react-router-dom'
+import { useBoardCreateMutation } from 'common/services/ApiService/mutations/BoardCreate'
 //MUI
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import { Button, TextField, Box } from '@material-ui/core'
 
-const BoardCreateContainer = () => {
-    const [open, setOpen] = useState(false)
-    const handleClickOpen = () => {
-        setOpen(true)
+type Props = {
+    outlined?: boolean
+}
+
+const BoardCreateContainer: React.FC<Props> = ({ outlined = false }) => {
+    const [title, setTitle] = useState('')
+    const { openModal, closeModal } = useModal()
+
+    const history = useHistory()
+
+    const { mutateAsync: createBoard, isLoading } = useBoardCreateMutation({
+        onSuccess: data => {
+            history.push(`/boards/${data._id}`)
+        },
+    })
+
+    const createBoardOnServer = () => {
+        return createBoard({ body: { title } })
     }
 
-    const handleClose = () => {
-        setOpen(false)
-    }
+    const handleOpenModal = () => {
+        const handleCloseModal = () => closeModal(modalKey)
+        const modalKey = 'create-board'
 
-    const CreateBoardContent = () => {
-        const [title, setTitle] = useState('')
-        const { request, loading } = useHttp()
-        const history = useHistory()
-
-        const createBoardOnServer = async () => {
-            const data = await request('/boards/create', 'post', { title })
-            if (data) {
-                history.push(`/boards/${data._id}`)
-            }
-        }
-        return (
-            <div>
-                <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">
-                        Выберите название доски
-                    </DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            autoFocus
-                            name="board_name"
-                            label="Название доски"
-                            fullWidth
-                            onChange={e => setTitle(e.target.value)}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose} color="primary">
+        openModal({
+            key: modalKey,
+            content: {
+                title: 'Введите название доски',
+                body: (
+                    <TextField
+                        autoFocus
+                        name="board_name"
+                        label="Название доски"
+                        fullWidth
+                        onChange={e => setTitle(e.target.value)}
+                    />
+                ),
+                actions: (
+                    <Box>
+                        <Button onClick={handleCloseModal} color="primary">
                             Отменить
                         </Button>
                         <Button
@@ -58,16 +53,24 @@ const BoardCreateContainer = () => {
                             color="primary">
                             Создать
                         </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
-        )
+                    </Box>
+                ),
+            },
+            dialogProps: {
+                maxWidth: 'xs',
+                fullWidth: true,
+            },
+        })
     }
-    return {
-        CreateBoardContent,
-        handleClose,
-        handleClickOpen,
-    }
+
+    return (
+        <Button
+            onClick={handleOpenModal}
+            variant={outlined ? 'outlined' : 'contained'}
+            color="primary">
+            Создать новую доску
+        </Button>
+    )
 }
 
 export default BoardCreateContainer

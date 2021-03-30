@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { darkTheme } from './utils/theme'
 import { useAuth } from './hooks/authHook'
 import { ThemeProvider } from '@material-ui/core/styles'
+import ModalProvider from 'common/providers/ModalProvider/ModalProvider'
 import { useRoutes } from './routes'
 import { AuthContext } from './context/authContext'
 import ApiProvider from 'common/providers/ApiProvider/Provider'
@@ -51,7 +52,9 @@ const App: React.FC = () => {
                             logout,
                             isAuthenticated,
                         }}>
-                        <Router>{routes}</Router>
+                        <ModalProvider>
+                            <Router>{routes}</Router>
+                        </ModalProvider>
                     </AuthContext.Provider>
                 </ApiProvider>
             </ThemeProvider>

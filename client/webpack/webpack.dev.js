@@ -13,7 +13,7 @@ module.exports = merge(baseConfig, {
     devtool: 'eval-source-map',
     devServer: {
         host: '0.0.0.0',
-        port: 4004,
+        port: 3000,
         contentBase: path.resolve('dist'),
         historyApiFallback: true,
         inline: true,

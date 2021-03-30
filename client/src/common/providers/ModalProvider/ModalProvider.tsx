@@ -11,6 +11,7 @@ import {
     DialogTitleProps,
     IconButton,
     Typography,
+    Box,
 } from '@material-ui/core'
 import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -54,7 +55,7 @@ const useStyles = makeStyles(theme =>
             justifyContent: 'space-between',
         },
         defaultPadding: {
-            padding: theme.spacing(4),
+            padding: theme.spacing(2),
         },
         disabledPadding: {
             padding: 0,
@@ -63,6 +64,9 @@ const useStyles = makeStyles(theme =>
             '& .MuiDialogContent-root:first-child': {
                 paddingTop: 0,
             },
+        },
+        dialogBorder: {
+            borderBottom: `2px solid ${theme.palette.primary.main}`,
         },
         actions: {
             boxShadow: '0px 2px 10px rgba(6, 88, 148, 0.15)',
@@ -125,50 +129,52 @@ const ModalProvider: React.FC<{ children: React.ReactNode }> = ({
                                 [styles.dialog]: isPaddingsDisabled,
                             })}
                             {...dialogProps}>
-                            {title && (
-                                <DialogTitle
-                                    disableTypography
-                                    className={clsx(
-                                        styles.title,
-                                        styles.defaultPadding,
-                                        {
+                            <Box className={styles.dialogBorder}>
+                                {title && (
+                                    <DialogTitle
+                                        disableTypography
+                                        className={clsx(
+                                            styles.title,
+                                            styles.defaultPadding,
+                                            {
+                                                [styles.disabledPadding]: isPaddingsDisabled,
+                                            }
+                                        )}
+                                        {...titleProps}>
+                                        <Typography variant="h5">
+                                            {title}
+                                        </Typography>
+                                        <IconButton
+                                            aria-label="close"
+                                            className={styles.closeIcon}
+                                            onClick={handleCloseModal}>
+                                            <CloseIcon />
+                                        </IconButton>
+                                    </DialogTitle>
+                                )}
+                                {body && (
+                                    <DialogContent
+                                        className={clsx(styles.defaultPadding, {
                                             [styles.disabledPadding]: isPaddingsDisabled,
-                                        }
-                                    )}
-                                    {...titleProps}>
-                                    <Typography variant="h2">
-                                        {title}
-                                    </Typography>
-                                    <IconButton
-                                        aria-label="close"
-                                        className={styles.closeIcon}
-                                        onClick={handleCloseModal}>
-                                        <CloseIcon />
-                                    </IconButton>
-                                </DialogTitle>
-                            )}
-                            {body && (
-                                <DialogContent
-                                    className={clsx(styles.defaultPadding, {
-                                        [styles.disabledPadding]: isPaddingsDisabled,
-                                    })}
-                                    {...contentProps}>
-                                    {body}
-                                </DialogContent>
-                            )}
-                            {actions && (
-                                <DialogActions
-                                    className={clsx(
-                                        styles.defaultPadding,
-                                        styles.actions,
-                                        {
-                                            [styles.disabledPadding]: isPaddingsDisabled,
-                                        }
-                                    )}
-                                    {...actionsProps}>
-                                    {actions}
-                                </DialogActions>
-                            )}
+                                        })}
+                                        {...contentProps}>
+                                        {body}
+                                    </DialogContent>
+                                )}
+                                {actions && (
+                                    <DialogActions
+                                        className={clsx(
+                                            styles.defaultPadding,
+                                            styles.actions,
+                                            {
+                                                [styles.disabledPadding]: isPaddingsDisabled,
+                                            }
+                                        )}
+                                        {...actionsProps}>
+                                        {actions}
+                                    </DialogActions>
+                                )}
+                            </Box>
                         </Dialog>
                     )
                 }

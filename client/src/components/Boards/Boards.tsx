@@ -5,6 +5,7 @@ import BoardItem from 'pages/BoardsPage/BoardItem'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import BoardCreate from 'containers/BoardCreate/BoardCreate'
 
 type Props = {
     loading: boolean
@@ -59,12 +60,7 @@ const Boards: React.FC<Props> = ({
                     <Typography className={classes.noBoardsTitle} variant="h5">
                         Пока что здесь ничего нет
                     </Typography>
-                    <Button
-                        onClick={onCreateNewBoard}
-                        variant="contained"
-                        color="primary">
-                        Создать новую доску
-                    </Button>
+                    <BoardCreate />
                 </Grid>
             ) : (
                 <Grid className={classes.boardsWrap}>
@@ -75,9 +71,7 @@ const Boards: React.FC<Props> = ({
                             board={item}
                         />
                     ))}
-                    <Button variant="outlined" onClick={onCreateNewBoard}>
-                        Создать новую доску
-                    </Button>
+                    <BoardCreate outlined />
                 </Grid>
             )}
         </Grid>
